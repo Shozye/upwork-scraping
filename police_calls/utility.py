@@ -30,3 +30,8 @@ def start_date_list():
             '10/01/2019', '11/01/2019', '12/01/2019', '01/01/2020', '02/01/2020', '03/01/2020', '04/01/2020',
             '05/01/2020', '06/01/2020', '07/01/2020', '08/01/2020', '09/01/2020', '10/01/2020', '11/01/2020',
             '12/01/2020']
+
+
+def csv_headers():
+    return ['Incident', 'Number', 'Category', 'Problem', 'Type', 'Response', 'Date', 'Address', 'HOA', 'School',
+            'District', 'Council', 'District', 'Zipcode']

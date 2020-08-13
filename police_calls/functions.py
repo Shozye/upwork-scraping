@@ -1,7 +1,9 @@
 from bs4 import BeautifulSoup
 import csv
-from scraper import Scraper
-from utility import *
+from police_calls.scraper import Scraper
+from police_calls.utility import *
+import os
+
 
 def scrape():
     """
@@ -51,8 +53,13 @@ def scrape_date(month, year):
                     rows.extend(a.format_table())
         else:
             rows.extend(a.format_table())
-    with open('data.csv', 'a+', newline='') as csvfile:
+    if os.path.isfile('data.csv'):
+        with open('data.csv', 'a', newline ='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerows(rows)
+    with open(f'scrape{month}{year}.csv', 'w+', newline='') as csvfile:
         writer = csv.writer(csvfile)
+        writer.writerow(csv_headers())
         writer.writerows(rows)
 
 
@@ -66,8 +73,7 @@ def parse():
     path = r'C:\Users\Rodzice.Mateusz-PC\Desktop\PythonProjects\BenHaynorScraping\innerhtmls'
     with open('data.csv', 'w+', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
-        headers = ['Incident', 'Number', 'Category', 'Problem', 'Type', 'Response', 'Date', 'Address', 'HOA', 'School',
-                   'District', 'Council', 'District', 'Zipcode']
+        headers = csv_headers()
         writer.writerow(headers)
         for i in range(1, AMOUNT + 1):
             if i % 100 == 0:

@@ -1,8 +1,9 @@
-from functions import parse
-from functions import scrape
-from functions import scrape_date
+from police_calls.functions import parse
+from police_calls.functions import scrape
+from police_calls.functions import scrape_date
 
 def main():
+
     """
     Uncomment one of the following functions
     """
