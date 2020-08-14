@@ -4,3 +4,4 @@ __pycache__
 police_calls/innerhtmls
 chromedriver.exe
 data.csv
+police_calls/monthly_scraping

@@ -5,6 +5,13 @@ from police_calls.utility import *
 import os
 
 
+def initialize_directories():
+    if not os.path.isdir('monthly_scraping'):
+        os.mkdir('monthly_scraping')
+    if not os.path.isdir('innerhtmls'):
+        os.mkdir('innerhtmls')
+
+
 def scrape():
     """
     This function is used to scrape all data from website and download it to txt files in innerhtmls directory
@@ -36,7 +43,9 @@ def scrape_date(month, year):
     :param month: string format mm
     :param year: string format yyyy
     scrape data from specified month and year and appends to data.csv
+    Also creates new file with data collected in one run
     """
+    # Scraping part
     rows = []
     date = f'{month}/01/{year}'
     drop_down_lst = dropdown_list()
@@ -53,11 +62,14 @@ def scrape_date(month, year):
                     rows.extend(a.format_table())
         else:
             rows.extend(a.format_table())
+    # Saving to files part
+
     if os.path.isfile('data.csv'):
-        with open('data.csv', 'a', newline ='') as csvfile:
+        with open('data.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerows(rows)
-    with open(f'scrape{month}{year}.csv', 'w+', newline='') as csvfile:
+
+    with open(f'monthly_scraping/scrape{month}{year}.csv', 'w+', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(csv_headers())
         writer.writerows(rows)
