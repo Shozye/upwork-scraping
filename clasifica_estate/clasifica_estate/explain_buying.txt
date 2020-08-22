@@ -1,0 +1,14 @@
+estate_id: example "MS4529176" or "235346"
+    It starts with "MS" if id was taken from MultipleSellers Page like
+    https://www.clasificadosonline.com/REFSMultipleSellers.asp?ID=4529176
+    if there is no prefix, then estate_id is the same as announcement_id
+
+seller_id: example "PL6356457" or "O46554234" <---- that's big o not zero at beginning.
+    it starts with "PL" if seller has got publisher listing.
+        Number is id of this publisher listing
+    it starts with "O" if seller is owner of property ~~ has not got publisher listing
+        Number is announcement id
+
+A lot of values in seller may be null because there is no requirement to fill all
+information about company. Also "name" is column for owners and "company" is
+for those with publisher listing

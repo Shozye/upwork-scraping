@@ -5,3 +5,9 @@ police_calls/innerhtmls
 chromedriver.exe
 data.csv
 police_calls/monthly_scraping
+body.txt
+clasifica_estate/clasifica_estate/announcements.json
+clasifica_estate/clasifica_estate/body.txt
+clasifica_estate/clasifica_estate/LOGS.log
+/clasifica_estate/items.json
+/clasifica_estate/LOGS.log

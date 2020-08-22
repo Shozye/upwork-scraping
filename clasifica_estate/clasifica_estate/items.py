@@ -8,7 +8,8 @@ import scrapy
 
 class ClasificaEstateItem(scrapy.Item):
     announcement_id = scrapy.Field()
-    main_photo_url = scrapy.Field()
+    estate_id = scrapy.Field()
+    seller_id = scrapy.Field()
     name = scrapy.Field()
     price = scrapy.Field()
     category = scrapy.Field()
@@ -19,7 +20,18 @@ class ClasificaEstateItem(scrapy.Item):
     lat = scrapy.Field()
     long = scrapy.Field()
     photo_urls = scrapy.Field()
-    seller_name = scrapy.Field()
-    seller_phone = scrapy.Field()
     description = scrapy.Field()
     pass
+
+
+class Seller(scrapy.Item):
+    seller_id = scrapy.Field()
+    PartnersListingREID = scrapy.Field()
+    address_locality = scrapy.Field()
+    address_region = scrapy.Field()
+    postal_code = scrapy.Field()
+    website_url = scrapy.Field()
+    name = scrapy.Field()
+    company = scrapy.Field()
+    phone = scrapy.Field()
+    description = scrapy.Field()
