@@ -30,7 +30,7 @@ class BigSpanishSpider(scrapy.Spider):
         pass
 
     def announcement_parse(self, response):
-        announcement = items.ClasificaEstateItem()
+        announcement = items.ForSaleAnnouncement()
         announcement["announcement_id"] = response.css("strong a.style7::text").get()
         if response.meta.get('estate_id', None) is not None:
             announcement["estate_id"] = response.meta["estate_id"]
@@ -57,7 +57,7 @@ class BigSpanishSpider(scrapy.Spider):
         image_seller = response.css("td.Ver12C img[itemprop='image']")
         if image_seller == list():
             announcement["seller_id"] = "O" + announcement["announcement_id"]
-            seller = items.Seller()
+            seller = items.ForSaleSeller()
             seller["seller_id"] = "O" + announcement["announcement_id"]
             seller["PartnersListingREID"] = None
             seller["description"] = None
@@ -79,7 +79,7 @@ class BigSpanishSpider(scrapy.Spider):
         yield announcement
 
     def seller_parse(self, response):
-        seller = items.Seller()
+        seller = items.ForSaleSeller()
         seller["PartnersListingREID"] = response.url.split("=")[1]
         seller["seller_id"] = "PL" + seller["PartnersListingREID"]
         seller["name"] = None
