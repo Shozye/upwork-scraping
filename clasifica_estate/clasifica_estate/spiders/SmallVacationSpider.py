@@ -32,8 +32,6 @@ class SmallVacationSpider(scrapy.Spider):
         else:
             announcement["phone2"] = None
         announcement["website_url"] = response.css("a.Ver12nounder[target='_blank']::text").get()
-        if not announcement["website_url"].startswith('www') and not announcement["website_url"].startswith("https"):
-            announcement["website_url"] = None
         announcement["photo_urls"] = response.css("div.MagicScroll a").xpath("@href").getall()
         if len(announcement["photo_urls"]) == 0:
             announcement["photo_urls"] = [response.css("#Trans").xpath("@href").get()]
