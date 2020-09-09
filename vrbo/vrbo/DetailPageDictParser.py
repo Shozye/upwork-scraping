@@ -74,10 +74,16 @@ class DetailPageDictParser:
         return self.avail_dict['listingReducer']['allFeaturedAmenitiesRanked']
 
     def price_amount(self):
-        return self.avail_dict['listingReducer']['priceSummary']['amount']
+        try:
+            return self.avail_dict['listingReducer']['priceSummary']['amount']
+        except KeyError:
+            return None
 
     def price_currency(self):
-        return self.avail_dict['listingReducer']['priceSummary']['currency']
+        try:
+            return self.avail_dict['listingReducer']['priceSummary']['currency']
+        except KeyError:
+            return None
 
     def latitude(self):
         return self.avail_dict['listingReducer']['geoCode']['latitude']

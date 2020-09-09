@@ -36,18 +36,19 @@ class HomeSpider(scrapy.Spider):
                 yield self.yield_listing_parse(country_name, _filters, i, am_bedrooms=am_bedrooms,
                                                am_bathrooms=am_bathrooms, price=price_min)
         else:
-
-            if am_bedrooms is None:
+            if price_min == 0 or price_min is None:
+                for i in range(1, 992, 10):
+                    price_min = i
+                    yield self.yield_begin_parse(country_name, [], am_bedrooms=am_bedrooms, am_bathrooms=am_bathrooms,
+                                                 price=price_min)
+            elif am_bedrooms is None:
                 for i in range(1, 50):
                     am_bedrooms = i
-                    yield self.yield_begin_parse(country_name, [], am_bedrooms=am_bedrooms)
+                    yield self.yield_begin_parse(country_name, [], am_bedrooms=am_bedrooms, am_bathrooms=am_bathrooms,
+                                                 price=price_min)
             elif am_bathrooms is None:
                 for i in range(1, 50):
                     am_bathrooms = i
-                    yield self.yield_begin_parse(country_name, [], am_bedrooms=am_bedrooms, am_bathrooms=am_bathrooms)
-            elif price_min == 0 or price_min is None:
-                for i in range(1, 982, 20):
-                    price_min = i
                     yield self.yield_begin_parse(country_name, [], am_bedrooms=am_bedrooms, am_bathrooms=am_bathrooms,
                                                  price=price_min)
             elif len(_filters) == 0:
@@ -130,11 +131,11 @@ class HomeSpider(scrapy.Spider):
         if am_bathrooms is None:
             am_bathrooms_max = None
             am_bathrooms_min = 0
-        price_max, price_min = price + 19, price
+        price_max, price_min = price + 9, price
         if price is None or price == 0:
             price_max = None
             price_min = 0
-        elif price_max == 1000:
+        elif price_max >= 1000:
             price_max = None
         data = {"operationName": "SearchRequestQuery", "variables": {"filterCounts": True,
                                                                      "request": {
@@ -195,7 +196,7 @@ class HomeSpider(scrapy.Spider):
                 page = ListingDictParser.ListingDictParser(lstng)
                 yield scrapy.Request('https://www.vrbo.com' + page.page_url(), callback=self.detail_page_parse)
 
-    def detail_page_parse(self,response):
+    def detail_page_parse(self, response):
         page = DetailPageDictParser.DetailPageDictParser(response)
         listing = items.DetailPage()
 

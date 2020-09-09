@@ -25,3 +25,6 @@ vac.json
 /vrbo/puerto_rico.json
 /vrbo/resp.txt
 /vrbo/window.txt
+/vrbo/puerto-rico-detail.json
+/vrbo/puerto-rico-non-detail.json
+/vrbo/*.json
