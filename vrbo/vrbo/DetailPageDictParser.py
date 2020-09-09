@@ -32,9 +32,10 @@ class DetailPageDictParser:
         return self.avail_dict['listingReducer']['bedrooms']
 
     def bathrooms(self):
-        return self.avail_dict['listingReducer']['bathrooms']['full'] + self.avail_dict['listingReducer']['bathrooms'][
-            'half']
-
+        try:
+            return self.avail_dict['listingReducer']['bathrooms']['full'] + self.avail_dict['listingReducer']['bathrooms']['half']
+        except KeyError:
+            return None
     def sleeps(self):
         return self.avail_dict['listingReducer']['sleeps']
 

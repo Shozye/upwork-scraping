@@ -34,7 +34,7 @@ class HomeSpider(scrapy.Spider):
                                                am_bathrooms=am_bathrooms, price=price_min)
         else:
             if price_min == 0 or price_min is None:
-                for i in range(1, 992, 10):
+                for i in range(1, 982, 20):
                     price_min = i
                     yield self.yield_begin_parse(country_name, [], am_bedrooms=am_bedrooms, am_bathrooms=am_bathrooms,
                                                  price=price_min)
@@ -128,7 +128,7 @@ class HomeSpider(scrapy.Spider):
         if am_bathrooms is None:
             am_bathrooms_max = None
             am_bathrooms_min = 0
-        price_max, price_min = price + 9, price
+        price_max, price_min = price + 19, price
         if price is None or price == 0:
             price_max = None
             price_min = 0
