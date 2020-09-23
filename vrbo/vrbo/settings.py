@@ -38,14 +38,8 @@ DOWNLOAD_DELAY = 0.25
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
-    "Host": "www.vrbo.com",
-    "Connection": "keep-alive",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "Sec-Fetch-Site": "same-origin",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-User": "?1",
-    "Sec-Fetch-Dest": "document",
-    "Referer": "https://www.vrbo.com/search/keywords:puerto-rico/arrival:2022-10-11/departure:2022-10-15?adultsCount=1&petIncluded=false",
+    "Referer": "http://www.google.com/",
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,pl;q=0.7"
 }
