@@ -7,8 +7,10 @@ class zillySpider(scrapy.Spider):
     name = "zillySpider"
     huge_amount = 0
     def start_requests(self):
+
         place = "Puerto Rico"
         # place = "Texas"
+
         url, meta = utility.create_search_link_meta(place,
                                                     min_price=0,
                                                     max_price=1000000000,  # max_price=1000000000,
@@ -18,12 +20,11 @@ class zillySpider(scrapy.Spider):
                              meta=meta)
 
     def search_parse(self, response):
-        amount_script = response.css("script[data-zrr-shared-data-key='mobileSearchPageStore']::text")
+        amount_script = response.css("script[data-zrr-shared-data-key='mobileSearchPageStore']::text").get()
         amount_results = json.loads(amount_script[4:-3])["cat1"]["searchList"]["totalResultCount"]
         meta = response.meta
-        print(amount_results)
+        self.logger.info(f"{amount_results} on site {response.url}")
         if amount_results > 500:
-            print('is here')
             if meta.get('min_lot_size', 1) != 0 or meta.get('max_lot_size', 1) != 5000000:
                 if meta['max_lot_size'] - meta['min_lot_size'] < 100:
                     raise Exception(
@@ -78,7 +79,7 @@ class zillySpider(scrapy.Spider):
                                                                 meta['min_lot_size'], meta['max_lot_size'], page_num)
                 yield scrapy.Request(url, callback=self.listing_parse, meta=new_meta, dont_filter=True)
         else:
-            self.logger.debug(f"No listings on {response.url}")
+            self.logger.info(f"No listings on {response.url}")
 
     def listing_parse(self, response):
         for a in response.css("a.list-card-img"):
