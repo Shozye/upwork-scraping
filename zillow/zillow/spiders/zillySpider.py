@@ -8,8 +8,8 @@ class zillySpider(scrapy.Spider):
     huge_amount = 0
     def start_requests(self):
 
-        place = "Puerto Rico"
-        # place = "Texas"
+        # place = "Puerto Rico"
+        place = "Texas"
 
         url, meta = utility.create_search_link_meta(place,
                                                     min_price=0,
