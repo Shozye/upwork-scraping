@@ -87,7 +87,11 @@ class zillySpider(scrapy.Spider):
         script = json.loads(response.css("script#hdpApolloPreloadedData::text").get())
         zpid = script['zpid']
         key = f"""OffMarketDoubleScrollFullRenderQuery{{'zpid':{zpid},'contactFormRenderParameter':{{'zpid':{zpid},'platform':'desktop','isDoubleScroll':true}}}}"""
-        details = json.loads(script['apiCache'].replace("\\\"", "'"))[key]['property']
+        try:
+            details = json.loads(script['apiCache'].replace("\\\"", "'"))[key]['property']
+        except (TypeError, KeyError):
+            key2 = f"""ForSaleDoubleScrollFullRenderQuery{{'zpid':{zpid},'contactFormRenderParameter':{{'zpid':{zpid},'platform':'desktop','isDoubleScroll':true}}}}"""
+            details = json.loads(script['apiCache'].replace("\\\"", "'"))[key2]['property']
         """ 
         with open("script.txt", 'w+', encoding='utf-8') as file:
             file.write(json.dumps(details))
