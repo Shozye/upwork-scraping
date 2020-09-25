@@ -29,3 +29,8 @@ vac.json
 /vrbo/puerto-rico-non-detail.json
 /vrbo/*.json
 /zillow/zillow/notes.txt
+/zillow/scrapinghub.yml
+/zillow/setup.py
+/zillow/test.json
+/zillow/puerto.json
+/zillow/LOGS.log

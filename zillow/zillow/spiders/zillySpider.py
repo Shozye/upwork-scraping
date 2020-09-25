@@ -5,7 +5,7 @@ from .. import items
 
 class zillySpider(scrapy.Spider):
     name = "zillySpider"
-
+    huge_amount = 0
     def start_requests(self):
         place = "Puerto Rico"
         # place = "Texas"
@@ -66,6 +66,8 @@ class zillySpider(scrapy.Spider):
             yield scrapy.Request(url1, callback=self.search_parse, meta=meta1)
             yield scrapy.Request(url2, callback=self.search_parse, meta=meta2)
         elif 0 < amount_results <= 500:
+            self.huge_amount += amount_results
+            self.logger.debug(f'found {amount_results}, total {self.huge_amount} on site {response.url}')
             if response.css("li.PaginationNumberItem-bnmlxt-0 a::text").get() is not None:
                 am_pages = int(response.css("li.PaginationNumberItem-bnmlxt-0 a::text").getall()[-1].replace('"', ''))
             else:
