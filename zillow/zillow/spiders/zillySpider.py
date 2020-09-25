@@ -18,11 +18,12 @@ class zillySpider(scrapy.Spider):
                              meta=meta)
 
     def search_parse(self, response):
-        amount_results = int(
-            response.css("span.result-count::text").get().split(" ")[0].replace(",", "")) if response.css(
-            "span.result-count::text").get() is not None else 0
+        amount_script = response.css("script[data-zrr-shared-data-key='mobileSearchPageStore']::text")
+        amount_results = json.loads(amount_script[4:-3])["cat1"]["searchList"]["totalResultCount"]
         meta = response.meta
+        print(amount_results)
         if amount_results > 500:
+            print('is here')
             if meta.get('min_lot_size', 1) != 0 or meta.get('max_lot_size', 1) != 5000000:
                 if meta['max_lot_size'] - meta['min_lot_size'] < 100:
                     raise Exception(
