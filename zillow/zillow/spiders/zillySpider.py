@@ -26,7 +26,7 @@ class zillySpider(scrapy.Spider):
             amount_results = json.loads(amount_script[4:-3])["cat1"]["searchList"]["totalResultCount"]
             meta = response.meta
             self.logger.info(f"{amount_results} on site {response.url}")
-            if amount_results > 500:
+            if amount_results > 700:
                 if meta.get('min_lot_size', 1) != 0 or meta.get('max_lot_size', 1) != 5000000:
                     if meta['max_lot_size'] - meta['min_lot_size'] < 100:
                         raise Exception(
@@ -69,7 +69,7 @@ class zillySpider(scrapy.Spider):
                                                                       meta['max_lot_size'])
                 yield scrapy.Request(url1, callback=self.search_parse, meta=meta1)
                 yield scrapy.Request(url2, callback=self.search_parse, meta=meta2)
-            elif 0 < amount_results <= 500:
+            elif 0 < amount_results <= 700:
                 self.huge_amount += amount_results
                 self.logger.debug(f'found {amount_results}, total {self.huge_amount} on site {response.url}')
                 if response.css("li.PaginationNumberItem-bnmlxt-0 a::text").get() is not None:
@@ -96,8 +96,11 @@ class zillySpider(scrapy.Spider):
                 raise Exception("No captcha perimeter in link and TypeError")
     def listing_parse(self, response):
         if 'captchaPerimeterX' not in response.url:
-            for a in response.css("a.list-card-img"):
-                yield response.follow(a, callback=self.announcement_parse)
+            for a in response.css("a.list-card-img").xpath("@href").getall():
+                announcement = items.Announcement()
+                announcement["url"] = a
+                yield announcement
+                # yield response.follow(a, callback=self.announcement_parse)
         else:
             sleep(60)
             yield scrapy.Request(response.url, callback=self.listing_parse, dont_filter=True)

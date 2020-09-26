@@ -29,3 +29,7 @@ class Listing(scrapy.Item):
     description = scrapy.Field()
     price_history = scrapy.Field()
     home_status = scrapy.Field()
+
+class Announcement(scrapy.Item):
+    url = scrapy.Field()
+
