@@ -5,3 +5,4 @@
   - Homes for rent
   - Homes for sale
 - vrbo: Scrape all data about homes for rent from vrbo.com. 
+- zillow: Scrape all data about sold homes from zillow.com. This was harder because of some spider traps and checking user activity.

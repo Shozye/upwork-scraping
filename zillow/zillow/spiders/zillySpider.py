@@ -90,7 +90,7 @@ class zillySpider(scrapy.Spider):
                                                               meta['max_price'],
                                                               meta['min_lot_size'],
                                                               meta['max_lot_size'])
-                sleep(180)
+                sleep(60)
                 yield scrapy.Request(url1, callback=self.search_parse, meta=meta1, dont_filter=True)
             else:
                 raise Exception("No captcha perimeter in link and TypeError")
@@ -99,7 +99,7 @@ class zillySpider(scrapy.Spider):
             for a in response.css("a.list-card-img"):
                 yield response.follow(a, callback=self.announcement_parse)
         else:
-            sleep(180)
+            sleep(60)
             yield scrapy.Request(response.url, callback=self.listing_parse, dont_filter=True)
 
     def announcement_parse(self, response):
@@ -158,7 +158,7 @@ class zillySpider(scrapy.Spider):
             yield listing
         except TypeError:
             if 'captchaPerimeterX' in response.url:
-                sleep(180)
+                sleep(60)
                 yield scrapy.Request(response.url, callback=self.announcement_parse, dont_filter=True)
             else:
                 raise Exception("No captcha perimeter in link and TypeError")
