@@ -4,15 +4,15 @@ from .. import utility
 from .. import items
 from time import sleep
 
+
 class zillySpider(scrapy.Spider):
     name = "zillySpider"
     huge_amount = 0
+
     def start_requests(self):
 
         # place = "Puerto Rico"
         place = "Texas"
-        self.logger.error('test error')
-        self.logger.info('test info')
         url, meta = utility.create_search_link_meta(place,
                                                     min_price=0,
                                                     max_price=1000000000,  # max_price=1000000000,
@@ -37,7 +37,8 @@ class zillySpider(scrapy.Spider):
                                                                       meta['min_price'],
                                                                       meta['max_price'],
                                                                       meta['min_lot_size'],
-                                                                      (meta['max_lot_size'] + meta['min_lot_size']) // 2)
+                                                                      (meta['max_lot_size'] + meta[
+                                                                          'min_lot_size']) // 2)
                         url2, meta2 = utility.create_search_link_meta(meta['place'],
                                                                       meta['min_price'],
                                                                       meta['max_price'],
@@ -50,7 +51,8 @@ class zillySpider(scrapy.Spider):
                                                                       meta['min_price'],
                                                                       meta['max_price'],
                                                                       meta['min_lot_size'],
-                                                                      (meta['max_lot_size'] + meta['min_lot_size']) // 2)
+                                                                      (meta['max_lot_size'] + meta[
+                                                                          'min_lot_size']) // 2)
                         url2, meta2 = utility.create_search_link_meta(meta['place'],
                                                                       meta['min_price'],
                                                                       meta['max_price'],
@@ -74,17 +76,19 @@ class zillySpider(scrapy.Spider):
                 self.huge_amount += amount_results
                 self.logger.debug(f'found {amount_results}, total {self.huge_amount} on site {response.url}')
                 if response.css("li.PaginationNumberItem-bnmlxt-0 a::text").get() is not None:
-                    am_pages = int(response.css("li.PaginationNumberItem-bnmlxt-0 a::text").getall()[-1].replace('"', ''))
+                    am_pages = int(
+                        response.css("li.PaginationNumberItem-bnmlxt-0 a::text").getall()[-1].replace('"', ''))
                 else:
                     am_pages = 1
                 for page_num in range(1, am_pages + 1):
                     url, new_meta = utility.create_search_link_meta(meta['place'], meta['min_price'], meta['max_price'],
-                                                                    meta['min_lot_size'], meta['max_lot_size'], page_num)
+                                                                    meta['min_lot_size'], meta['max_lot_size'],
+                                                                    page_num)
                     yield scrapy.Request(url, callback=self.listing_parse, meta=new_meta, dont_filter=True)
             else:
                 self.logger.info(f"No listings on {response.url}")
         except TypeError:
-            if 'captchaPerimeterX' in response.url:
+            if response.status == 307:
                 meta = response.meta
                 url1, meta1 = utility.create_search_link_meta(meta['place'],
                                                               meta['min_price'],
@@ -95,8 +99,9 @@ class zillySpider(scrapy.Spider):
                 yield scrapy.Request(url1, callback=self.search_parse, meta=meta1, dont_filter=True)
             else:
                 raise Exception("No captcha perimeter in link and TypeError")
+
     def listing_parse(self, response):
-        if 'captchaPerimeterX' not in response.url:
+        if response.status != 307:
             for a in response.css("a.list-card-img").xpath("@href").getall():
                 announcement = items.Announcement()
                 announcement["url"] = a
@@ -161,7 +166,7 @@ class zillySpider(scrapy.Spider):
             listing["home_status"] = details["homeStatus"]
             yield listing
         except TypeError:
-            if 'captchaPerimeterX' in response.url:
+            if response.status == 307:
                 self.logger.error(f"got captcha'd in {response.url}")
                 yield scrapy.Request(response.url, callback=self.announcement_parse, dont_filter=True)
             else:
