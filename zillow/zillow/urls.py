@@ -1,0 +1,1 @@
+parts =["""[{"url":"https://www.zillow.com/homedetails/340-Parkside-Ct-Murphy-TX-75094/69632477_zpid/"}]"""]
