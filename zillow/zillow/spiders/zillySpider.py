@@ -11,7 +11,8 @@ class zillySpider(scrapy.Spider):
 
         # place = "Puerto Rico"
         place = "Texas"
-
+        self.logger.error('test error')
+        self.logger.info('test info')
         url, meta = utility.create_search_link_meta(place,
                                                     min_price=0,
                                                     max_price=1000000000,  # max_price=1000000000,
