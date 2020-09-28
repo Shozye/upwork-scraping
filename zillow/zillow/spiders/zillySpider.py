@@ -97,7 +97,7 @@ class zillySpider(scrapy.Spider):
             else:
                 self.logger.info(f"No listings on {response.url}")
         except TypeError:
-            if response.status == 307:
+            if 'captchaPerimeterX' in response.url:
                 meta = response.meta
                 url1, meta1 = utility.create_search_link_meta(meta['place'],
                                                               meta['min_price'],
@@ -110,7 +110,7 @@ class zillySpider(scrapy.Spider):
                 raise Exception("No captcha perimeter in link and TypeError")
 
     def listing_parse(self, response):
-        if response.status != 307:
+        if 'captchaPerimeterX' not in response.url:
             for a in response.css("a.list-card-img").xpath("@href").getall():
                 announcement = items.Announcement()
                 announcement["url"] = a
@@ -175,7 +175,7 @@ class zillySpider(scrapy.Spider):
             listing["home_status"] = details["homeStatus"]
             yield listing
         except TypeError:
-            if response.status == 307:
+            if 'captchaPerimeterX' in response.url:
                 self.logger.error(f"got captcha'd in {response.url}")
                 yield scrapy.Request(response.url, callback=self.announcement_parse, dont_filter=True)
             else:
