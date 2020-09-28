@@ -34,3 +34,8 @@ vac.json
 /zillow/test.json
 /zillow/puerto.json
 /zillow/LOGS.log
+/zillow/help/processed.txt
+/zillow/help/uti.py
+/zillow/help/scraper.py
+/zillow/help/h.txt
+/zillow/help/all_urls.txt

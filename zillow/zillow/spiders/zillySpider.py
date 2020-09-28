@@ -3,23 +3,32 @@ import json
 from .. import utility
 from .. import items
 from time import sleep
+from .. import counties
 
 
 class zillySpider(scrapy.Spider):
     name = "zillySpider"
     huge_amount = 0
 
+    def __init__(self, letter='A', name=None, **kwargs):
+        super().__init__(name=None, **kwargs)
+        self.letter = letter
+
     def start_requests(self):
 
         # place = "Puerto Rico"
-        place = "Texas"
-        url, meta = utility.create_search_link_meta(place,
-                                                    min_price=0,
-                                                    max_price=1000000000,  # max_price=1000000000,
-                                                    min_lot_size=0,
-                                                    max_lot_size=5000000)
-        yield scrapy.Request(url, callback=self.search_parse,
-                             meta=meta)
+        # place = "Texas"
+
+        for place in counties.counties:
+            if place[0] == self.letter or place[0].lower() == self.letter:
+                self.logger.info(f"Stated {self.letter}")
+                url, meta = utility.create_search_link_meta(place,
+                                                            min_price=0,
+                                                            max_price=5000000,  # max_price=1000000000,
+                                                            min_lot_size=0,
+                                                            max_lot_size=5000000)
+                yield scrapy.Request(url, callback=self.search_parse,
+                                     meta=meta)
 
     def search_parse(self, response):
         try:
