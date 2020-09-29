@@ -54,7 +54,6 @@ DEFAULT_REQUEST_HEADERS = {
 #DOWNLOADER_MIDDLEWARES = {
 #    'zillow.middlewares.ZillowDownloaderMiddleware': 543,
 #}
-
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
