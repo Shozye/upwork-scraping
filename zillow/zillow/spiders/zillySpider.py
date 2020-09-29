@@ -13,7 +13,7 @@ class zillySpider(scrapy.Spider):
     def __init__(self, letter='A', part=-1, name=None, **kwargs):
         super().__init__(name=None, **kwargs)
         self.letter = letter
-        self.part = part
+        self.part = int(part)
 
     def start_requests(self):
         # place = "Puerto Rico"
