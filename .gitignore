@@ -39,3 +39,7 @@ vac.json
 /zillow/help/scraper.py
 /zillow/help/h.txt
 /zillow/help/all_urls.txt
+/zillow/project.egg-info/
+/zillow/build/
+/zillow/help/
+/zillow/A.json
