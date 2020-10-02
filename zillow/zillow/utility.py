@@ -95,12 +95,13 @@ def create_special_search_link(place, min_price=None, max_price=None, min_lot_si
 
 def create_6_special_search_links(place, min_price=None, max_price=None, min_lot_size=None, max_lot_size=None, page_num=None):
     url1, meta1 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 0, 1249)
-    url2, meta2 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 1250, 1999)
-    url3, meta3 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 2000, 2499)
-    url4, meta4 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 2500, 2999)
-    url5, meta5 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 3000, 4999)
-    url6, meta6 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 5000, 15000)
-    return [(url1, meta1), (url2, meta2), (url3, meta3), (url4, meta4), (url5, meta5), (url6, meta6)]
+    url2, meta2 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 1250, 1599)
+    url3, meta3 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 1600, 1999)
+    url4, meta4 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 2000, 2499)
+    url5, meta5 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 2500, 2999)
+    url6, meta6 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 3000, 4999)
+    url7, meta7 = create_special_search_link(place, min_price, max_price, min_lot_size, max_lot_size, page_num, 5000, 15000)
+    return [(url1, meta1), (url2, meta2), (url3, meta3), (url4, meta4), (url5, meta5), (url6, meta6), (url7, meta7)]
 
 if __name__ == '__main__':
     print(create_search_link_meta("Puerto Rico"))
