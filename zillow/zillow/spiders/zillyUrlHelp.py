@@ -12,7 +12,7 @@ class zillyUrlHelp(scrapy.Spider):
     def start_requests(self):
         # place = "Puerto Rico"
         for url in add_urls.urls:
-            for link in utility.create_4_special_search_links(url["place"], url["min_price"], url["max_price"], url["min_lot_size"], url["max_lot_size"]):
+            for link in utility.create_6_special_search_links(url["place"], url["min_price"], url["max_price"], url["min_lot_size"], url["max_lot_size"]):
                 new_url, meta = link[0], link[1]
                 print(meta)
                 yield scrapy.Request(new_url, callback=self.search_parse, meta=meta)
